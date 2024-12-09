@@ -6,7 +6,7 @@ from Model import predict
 def continue_text(text_to_continue: str, max_length: int, top_k: int, top_p: float,
                   temperature: float, no_repeat: int) -> str:
     """
-        Функция прослойки между Model и View генерации текста. 
+        Функция для взаимодействия между Model и View. 
     """
     return predict.continue_text(
         text_to_continue=text_to_continue,
