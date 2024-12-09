@@ -6,6 +6,13 @@ from tkinter.scrolledtext import ScrolledText
 from tkinter import filedialog, messagebox
 from Backend import controller
 
+# Параметы по умолчанию
+DEF_MAX_LEN = 100
+DEF_TOP_K = 5
+DEF_TOP_P = 0.9
+DEF_TEMP = 0.9
+DEF_NO_REPEAT = 3
+
 def load_text_from_file() -> None:
     """
         Функция для загрузки исходного текста из файла.
@@ -23,7 +30,6 @@ def load_text_from_file() -> None:
                 text_input_field.insert(tk.END, text)  # Вставляем текст из файла
         except Exception as e:
             messagebox.showerror("Ошибка", f"Не удалось загрузить файл: {e}")
-
 
 def gen_result() -> None:
     """
@@ -44,11 +50,11 @@ def gen_result() -> None:
     temperature = temp_input_field.get().strip()
     no_repeat = no_repeat_input_field.get().strip()
 
-    max_length = 100 if not max_length else int(max_length)
-    top_k = 5 if not top_k else int(top_k)
-    top_p = 0.9 if not top_p else float(top_p)
-    temperature = 0.9 if not temperature else float(temperature)
-    no_repeat = 3 if not no_repeat else int(no_repeat)
+    max_length = 100 if not max_length else DEF_MAX_LEN
+    top_k = 5 if not top_k else DEF_TOP_K
+    top_p = 0.9 if not top_p else DEF_TOP_P
+    temperature = 0.9 if not temperature else DEF_TEMP
+    no_repeat = 3 if not no_repeat else DEF_NO_REPEAT
     
     result = controller.continue_text(
         text_to_continue=input_text,
@@ -104,6 +110,7 @@ max_lenght_input_field = tk.Entry(
     highlightthickness=1,
     highlightbackground=gray
 )
+max_lenght_input_field.insert(0, str(DEF_MAX_LEN))
 max_lenght_input_field.grid(row=0, column=3, pady=2, padx=2)
 
 # Вёрстка поля ввода длини без повторений получаемого текста
@@ -121,11 +128,9 @@ no_repeat_input_field = tk.Entry(
     insertbackground="gray"
 )
 no_repeat_input_field.grid(row=1, column=3, pady=2, padx=2)
+no_repeat_input_field.insert(0, str(DEF_NO_REPEAT))
 
-
-
-
-# Вёрстка поля ввода длини без повторений получаемого текста
+# Вёрстка поля ввода top_k и top_p
 top_k_label = tk.Label(
     root, text="top k:",
     bg="black", fg="white", font=("Arial", 12, "bold")
@@ -140,8 +145,8 @@ top_k_input_field = tk.Entry(
     insertbackground="gray"
 )
 top_k_input_field.grid(row=2, column=3, pady=2, padx=2)
+top_k_input_field.insert(0, str(DEF_TOP_K))
 
-# Вёрстка поля ввода длини без повторений получаемого текста
 top_p_label = tk.Label(
     root, text="top p:",
     bg="black", fg="white", font=("Arial", 12, "bold")
@@ -156,8 +161,9 @@ top_p_input_field = tk.Entry(
     insertbackground="gray"
 )
 top_p_input_field.grid(row=3, column=3, pady=2, padx=2)
+top_p_input_field.insert(0, str(DEF_TOP_P))
 
-# Вёрстка поля ввода длини без повторений получаемого текста
+# Вёрстка поля ввода температуры
 temp_label = tk.Label(
     root, text="Температура:",
     bg="black", fg="white", font=("Arial", 12, "bold")
@@ -172,7 +178,7 @@ temp_input_field = tk.Entry(
     insertbackground="gray"
 )
 temp_input_field.grid(row=4, column=3, pady=2, padx=2)
-
+temp_input_field.insert(0, str(DEF_TEMP))
 
 # Вёрстка поля с результатом
 output_field = ScrolledText(

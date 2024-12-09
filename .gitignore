@@ -7,9 +7,9 @@ __pycache__/
 *.so
 
 # pdf
-.pdf
-.docx
-.pptx
+*.pdf
+*.docx
+*.pptx
 # Distribution / packaging
 .Python
 build/

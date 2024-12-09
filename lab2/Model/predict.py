@@ -1,9 +1,9 @@
 """
     Model file
 """
-import torch
+import torch # type: ignore
 import numpy as np
-from transformers import GPT2LMHeadModel, GPT2Tokenizer
+from transformers import GPT2LMHeadModel, GPT2Tokenizer # type: ignore
 
 np.random.seed(737)
 torch.manual_seed(737)
@@ -13,12 +13,11 @@ def continue_text(text_to_continue: str,  max_length: int, top_k: int, top_p: fl
         Параметры функции generate из ruGpt: <br>
         - prompt - исходная промпт-строка<br>
         - max_length - максимальная длина генерируемой последовательности токенов<br>
-        - temperature - температура (модуляция вероятности следующего токена)<br>
         - top_k - топ по вероятности токенов для использования<br>
         - top_p - для генерации используются токены с кумулятивной вероятностью topp и более<br>
+        - temperature - температура (модуляция вероятности следующего токена)<br>
         - num_return_sequences - количество генерируемых последовательностей<br>
         - no_repeat_ngram_size - минимальная длина неповторяющейся последовательности слов<br>
-        - repetition_penalty - Штраф за повторение слов. Чем выше значение, тем меньше модель будет повторять одинаковые слова. <br>
         - do_sample - флаг, несущий информацию о необходимости семплирования<br>
 
         Возвращаемое значение: <br>
@@ -31,12 +30,11 @@ def continue_text(text_to_continue: str,  max_length: int, top_k: int, top_p: fl
     input_ids = tokenizer.encode(text_to_continue, return_tensors="pt")
     out = model.generate(
         input_ids,
-        max_length=max_length, # 100
-        top_k=top_k, # 5
-        top_p=top_p, # 0.9
-        temperature=temperature, # 0.9
-        repetition_penalty=5.0,
-        no_repeat_ngram_size=no_repeat, # 3
+        max_length=max_length,
+        top_k=top_k,
+        top_p=top_p,
+        temperature=temperature,
+        no_repeat_ngram_size=no_repeat,
         do_sample=True
     )
     generated_text = list(map(tokenizer.decode, out))[0]
