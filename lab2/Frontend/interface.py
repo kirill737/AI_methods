@@ -64,6 +64,8 @@ def gen_result() -> None:
         temperature=temperature,
         no_repeat=no_repeat
     )
+    print(f"«{input_text}»")
+    print(f"«{result}»")
     output_field.delete("1.0", tk.END)
     output_field.insert(tk.END, result)
 
